@@ -30,7 +30,9 @@ android {
 
     packagingOptions {
         exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/LICENSE'
         exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/NOTICE'
     }
 
     sourceSets {
@@ -55,6 +57,9 @@ dependencies {
     compile 'com.google.guava:guava:17.0'
     compile 'com.intellij:annotations:+@jar'
     compile 'com.readystatesoftware.systembartint:systembartint:1.0.3'
+    compile 'com.firebase:firebase-client:1.0.7'
+    compile 'com.firebase:firebase-simple-login:1.2.0'
+    compile 'com.facebook:facebook-android-sdk:+@aar'
 }
 
 apt {
