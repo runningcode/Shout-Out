@@ -46,13 +46,35 @@ public class MainActivity extends ActionBarActivity
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
-        // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, PlaceholderFragment_.builder()
-                        .sectionNumber(position + 1)
-                        .build())
-                .commit();
+        switch (position) {
+            case 0:
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, TheMapFragment_.builder()
+                                .sectionNumber(position + 1)
+                                .build())
+                        .commit();
+                break;
+            case 1:
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, PlaceholderFragment_.builder()
+                                .sectionNumber(position + 1)
+                                .build())
+                        .commit();
+                break;
+            case 2:
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, PlaceholderFragment_.builder()
+                                .sectionNumber(position + 1)
+                                .build())
+                        .commit();
+                break;
+            default:
+                throw new IllegalArgumentException("Don't have a fragment for position " +
+                        position);
+        }
+        // update the main content by replacing fragments
+
     }
 
     public void onSectionAttached(int number) {
