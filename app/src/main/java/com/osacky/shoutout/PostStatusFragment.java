@@ -22,9 +22,7 @@ public class PostStatusFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         final EditText editText = new EditText(getActivity());
-        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity(),
-                AlertDialog.THEME_DEVICE_DEFAULT_DARK)
-                .setIcon(R.drawable.ic_action_post_status)
+        final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity())
                 .setTitle(getString(R.string.action_post_status))
                 .setView(editText)
                 .setPositiveButton(android.R.string.ok,
@@ -36,8 +34,7 @@ public class PostStatusFragment extends DialogFragment {
                                     Firebase ref = new Firebase(Constants.FIREBASE_URL);
                                     final Map<String, Object> statusUpdate = new HashMap<>();
                                     statusUpdate.put("status", text);
-                                    statusUpdate.put("privacy", "Whoo");
-                                    ref.child(Constants.STATUS_PATH).child(parseUser.getObjectId())
+                                    ref.child(Constants.LOC_PATH).child(parseUser.getObjectId())
                                             .updateChildren(statusUpdate);
                                     parseUser.put("status", text);
                                     parseUser.saveInBackground();
@@ -54,6 +51,9 @@ public class PostStatusFragment extends DialogFragment {
                             }
                         }
                 );
-        return alertDialog.create();
+        final AlertDialog alertDialog = dialogBuilder.create();
+        alertDialog.getWindow().getAttributes().windowAnimations = android.R.style
+                .Animation_Translucent;
+        return alertDialog;
     }
 }

@@ -5,6 +5,7 @@ import android.text.TextUtils;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
+import com.google.common.base.Joiner;
 
 public class ShoutOut {
     private double lat;
@@ -17,15 +18,14 @@ public class ShoutOut {
 
     public ShoutOut(String id, MapPoint p) {
         this.id = id;
-        lat = p.getLat();
-        lon = p.getLon();
+        updateShoutout(p);
     }
 
     public LatLng getLocation() {
         return new LatLng(lat, lon);
     }
 
-    public void setLocation(MapPoint p) {
+    public void updateShoutout(MapPoint p) {
         if (p.getLat() != 0) {
             lat = p.getLat();
         }
@@ -63,13 +63,15 @@ public class ShoutOut {
 
     @Override
     public String toString() {
-        return String.valueOf(id);
+        Joiner joiner = Joiner.on(" ").useForNull("null");
+        return joiner.join(id, "name is", name, "status is ", getStatus(), "lat is", lat,
+                "lon is", lon);
     }
 
     @Override
     public int hashCode() {
         if (TextUtils.isEmpty(id)) {
-            throw new IllegalStateException("Id should not be 0");
+            throw new IllegalStateException("Id should not be null or empty");
         }
         return id.hashCode();
     }

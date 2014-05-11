@@ -18,6 +18,9 @@ public final class MarkerAnimation {
 
     public static void animateMarker(final Marker marker, final LatLng finalPosition,
                                      final LatLngInterpolator latLngInterpolator) {
+        if (marker == null || finalPosition == null || latLngInterpolator == null) {
+            return;
+        }
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB_MR1) {
             animateMarkerToGB(marker, finalPosition, latLngInterpolator);
         } else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
@@ -87,10 +90,6 @@ public final class MarkerAnimation {
             }
         };
         Property<Marker, LatLng> property = Property.of(Marker.class, LatLng.class, "position");
-        assert marker != null;
-        assert property != null;
-        assert typeEvaluator != null;
-        assert finalPosition != null;
         ObjectAnimator animator = ObjectAnimator.ofObject(marker, property, typeEvaluator, finalPosition);
         animator.setDuration(3000);
         animator.start();

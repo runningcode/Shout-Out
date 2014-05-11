@@ -1,5 +1,8 @@
 package com.osacky.shoutout.utils;
 
+import com.facebook.rebound.SpringConfig;
+import com.facebook.rebound.SpringSystem;
+
 import org.joda.time.DateTimeConstants;
 
 @SuppressWarnings("unused")
@@ -24,4 +27,11 @@ final public class Constants {
 
     public static final int UPDATE_INTERVAL = 20 * DateTimeConstants.MILLIS_PER_SECOND;
     public static final int FASTEST_INTERVAL = 10 * DateTimeConstants.MILLIS_PER_SECOND;
+
+
+    public static SpringSystem springSystem = SpringSystem.create();
+    public static final SpringConfig ORIGAMI_SPRING_CONFIG = SpringConfig
+            .fromOrigamiTensionAndFriction(40, 5);
+    public static final SpringConfig BUTTON_SPRING_CONFIG = SpringConfig
+            .fromOrigamiTensionAndFriction(140, 8);
 }

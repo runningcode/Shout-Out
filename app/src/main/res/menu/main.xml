@@ -4,6 +4,14 @@
       tools:context="com.osacky.shoutout.MainActivity">
 
     <item
+        android:id="@+id/action_search"
+        android:title="@android:string/search_go"
+        android:icon="@android:drawable/ic_menu_search"
+        app:showAsAction="ifRoom|collapseActionView"
+        app:actionViewClass="android.support.v7.widget.SearchView"
+        />
+
+    <item
         android:id="@+id/action_settings"
         android:title="@string/action_settings"
         android:orderInCategory="100"
