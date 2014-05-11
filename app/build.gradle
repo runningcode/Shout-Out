@@ -47,19 +47,22 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
     apt "org.androidannotations:androidannotations:$AAVersion"
     compile "org.androidannotations:androidannotations-api:$AAVersion"
     compile 'com.android.support:appcompat-v7:19.1.0'
     compile 'com.android.support:support-v4:19.1.0'
+    compile 'com.facebook:facebook-android-sdk:+@aar'
+    compile 'com.firebase:firebase-client:1.0.13'
+    compile 'com.firebase:firebase-simple-login:1.2.0'
     compile 'com.google.android.gms:play-services:4.3.23'
     compile 'com.google.code.gson:gson:2.2.4'
     compile 'com.google.guava:guava:17.0'
+    compile 'com.google.maps.android:android-maps-utils:0.3+'
     compile 'com.intellij:annotations:+@jar'
     compile 'com.readystatesoftware.systembartint:systembartint:1.0.3'
-    compile 'com.firebase:firebase-client:1.0.7'
-    compile 'com.firebase:firebase-simple-login:1.2.0'
-    compile 'com.facebook:facebook-android-sdk:+@aar'
+    compile 'com.squareup.picasso:picasso:2.2.0'
+    compile 'joda-time:joda-time:2.3'
+    compile fileTree(dir: 'libs', include: ['*.jar'])
 }
 
 apt {
