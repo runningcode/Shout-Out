@@ -2,6 +2,7 @@ package com.osacky.shoutout;
 
 import android.app.Application;
 
+import com.osacky.shoutout.utils.Constants;
 import com.parse.Parse;
 import com.parse.ParseFacebookUtils;
 

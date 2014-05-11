@@ -1,7 +1,8 @@
-package com.osacky.shoutout;
+package com.osacky.shoutout.utils;
 
 import org.joda.time.DateTimeConstants;
 
+@SuppressWarnings("unused")
 final public class Constants {
 
     private Constants() {
