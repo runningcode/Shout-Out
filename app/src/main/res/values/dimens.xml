@@ -7,6 +7,9 @@
          https://developer.android.com/design/patterns/navigation-drawer.html -->
     <dimen name="navigation_drawer_width">240dp</dimen>
 
-    <dimen name="profile_image_size">50dp</dimen>
+    <dimen name="pin_image_height">67dp</dimen>
+    <dimen name="pin_image_width">56.3dp</dimen>
+    <dimen name="pin_profile">52.3dp</dimen>
+    <dimen name="pin_image_width_expanded">164dp</dimen>
     <dimen name="profile_padding">2dp</dimen>
 </resources>

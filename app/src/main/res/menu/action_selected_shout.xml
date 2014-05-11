@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_share"
+        app:showAsAction="ifRoom|collapseActionView"
+        android:title="Share"
+        app:title="Share"
+        app:actionProviderClass="android.support.v7.widget.ShareActionProvider"/>
+
+    <item
+        android:id="@+id/action_add_friend"
+        android:icon="@drawable/ic_action_social_add_person"
+        android:title="Add friend"
+        app:showAsAction="ifRoom"
+        app:title="Add friend"
+        />
+    <item
+        android:id="@+id/action_favorite"
+        android:icon="@drawable/ic_action_rating_favorite"
+        android:title="Add Pin"
+        app:showAsAction="ifRoom"
+        app:title="Add Pin"
+        />
+
+
+</menu>

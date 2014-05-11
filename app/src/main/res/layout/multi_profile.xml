@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="@dimen/profile_image_size"
-             android:layout_height="@dimen/profile_image_size"
+             android:layout_width="@dimen/pin_image_height"
+             android:layout_height="@dimen/pin_image_height"
              android:padding="2dp">
 
     <ImageView
@@ -18,7 +18,7 @@
         android:textAppearance="@style/Bubble.TextAppearance.Light"
         android:background="@android:color/background_dark"
         android:layout_gravity="center"
-        android:paddingLeft="@dimen/profile_image_size"
+        android:paddingLeft="@dimen/pin_image_height"
         android:paddingRight="@dimen/profile_padding"
         android:alpha=".8"/>
 

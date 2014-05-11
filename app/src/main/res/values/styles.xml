@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light">
         <!-- Customize your theme here. -->
         <item name="android:windowActionBarOverlay">true</item>
 
@@ -12,13 +12,21 @@
 
     </style>
 
+    <style name="DialogTheme" parent="@android:style/Theme.NoTitleBar.Fullscreen">
+    </style>
+
     <style name="AppTheme.Base.Blue">
         <item name="android:actionBarStyle">@style/BlueActionBar</item>
         <item name="actionBarStyle">@style/BlueActionBar</item>
     </style>
 
-    <style name="BlueActionBar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+    <style name="BlueActionBar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid">
         <item name="android:background">@color/blue</item>
         <item name="background">@color/blue</item>
+    </style>
+
+    <style name="FadeAnimation">
+        <item name="android:windowEnterAnimation">@anim/abc_fade_in</item>
+        <item name="android:windowExitAnimation">@anim/abc_fade_out</item>
     </style>
 </resources>

@@ -21,14 +21,13 @@
 
     </fragment>
 
-    <com.osacky.shoutout.SpringyImageView
+    <com.osacky.shoutout.views.SpringyImageView
         android:id="@+id/add_status_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/ic_action_post_status"
-        android:background="@color/blue"
+        android:src="@drawable/ic_compose_status_normal"
         map:startY="100dp"
         />
 

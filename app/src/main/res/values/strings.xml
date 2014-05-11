@@ -12,5 +12,6 @@
     <string name="fb_app_id">213646248845245</string>
     <string name="profile_image_desc">Profile Image</string>
     <string name="action_post_status">Post status</string>
+    <string name="status_hint">Type something</string>
 
 </resources>

@@ -1,21 +1,19 @@
-package com.osacky.shoutout;
+package com.osacky.shoutout.views;
 
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Build;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.facebook.rebound.Spring;
 import com.facebook.rebound.SpringListener;
 import com.facebook.rebound.SpringUtil;
+import com.osacky.shoutout.R;
 import com.osacky.shoutout.utils.Constants;
 
 public class SpringyImageView extends ImageView implements SpringListener {
-
-    private static final String LOG_TAG = SpringyImageView.class.getSimpleName();
 
     private static final float SHRINK_PERCENT = 0.2f;
     private Spring animSpring = Constants.springSystem.createSpring()
@@ -36,8 +34,6 @@ public class SpringyImageView extends ImageView implements SpringListener {
         assert a != null;
         mStartX = a.getDimension(R.styleable.SpringyButton_startX, 0);
         mStartY = a.getDimension(R.styleable.SpringyButton_startY, 0);
-        Log.i(LOG_TAG, "startX was " + mStartX);
-        Log.i(LOG_TAG, "startY was " + mStartY);
         a.recycle();
     }
 
@@ -96,7 +92,6 @@ public class SpringyImageView extends ImageView implements SpringListener {
                 setTranslationX(titleTranslateX);
                 setTranslationY(titleTranslateY);
             }
-
         }
 
         @Override

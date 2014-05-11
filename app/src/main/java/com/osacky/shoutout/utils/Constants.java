@@ -31,7 +31,7 @@ final public class Constants {
 
     public static SpringSystem springSystem = SpringSystem.create();
     public static final SpringConfig ORIGAMI_SPRING_CONFIG = SpringConfig
-            .fromOrigamiTensionAndFriction(40, 5);
+            .fromOrigamiTensionAndFriction(30, 8);
     public static final SpringConfig BUTTON_SPRING_CONFIG = SpringConfig
             .fromOrigamiTensionAndFriction(140, 8);
 }
