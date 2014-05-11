@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -22,12 +23,16 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.maps.android.SphericalUtil;
 import com.google.maps.android.ui.IconGenerator;
-import com.osacky.shoutout.models.Point;
+import com.osacky.shoutout.models.MapPoint;
 import com.osacky.shoutout.models.ShoutOut;
 import com.osacky.shoutout.utils.LatLngInterpolator;
 import com.osacky.shoutout.utils.MarkerAnimation;
@@ -40,6 +45,8 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.FragmentArg;
+import org.androidannotations.annotations.OptionsItem;
+import org.androidannotations.annotations.OptionsMenu;
 import org.androidannotations.annotations.UiThread;
 
 import java.io.IOException;
@@ -54,10 +61,12 @@ import static com.osacky.shoutout.utils.Constants.LOC_PATH;
 import static com.osacky.shoutout.utils.Constants.UPDATE_INTERVAL;
 
 @EFragment
+@OptionsMenu(R.menu.map)
 public class TheMapFragment extends SupportMapFragment
         implements GooglePlayServicesClient.ConnectionCallbacks,
         GooglePlayServicesClient.OnConnectionFailedListener,
-        LoggedInCallback, LocationListener {
+        GoogleMap.OnCameraChangeListener,
+        LoggedInCallback, LocationListener, GoogleMap.OnMarkerClickListener {
 
     private static final String LOG_TAG = TheMapFragment.class.getSimpleName();
     private static final int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
@@ -98,6 +107,13 @@ public class TheMapFragment extends SupportMapFragment
         mImageView.setLayoutParams(new ViewGroup.LayoutParams(mProfDimension, mProfDimension));
         mImageView.setPadding(padding, padding, padding, padding);
         mIconGenerator.setContentView(mImageView);
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        getMap().setOnMarkerClickListener(this);
+        getMap().setOnCameraChangeListener(this);
     }
 
     @Override
@@ -156,11 +172,18 @@ public class TheMapFragment extends SupportMapFragment
         }
     }
 
+
+    @Override
+    public void onLoggedIn() {
+        mRef.child(LOC_PATH).addChildEventListener(locationChildListener);
+//        mRef.child(STATUS_PATH).addChildEventListener(statusListener);
+    }
+
     @Background
     void processSnapShot(DataSnapshot snapshot) {
         final String key = snapshot.getName();
-        Log.i(LOG_TAG, "key added " + key);
-        final Point point = snapshot.getValue(Point.class);
+        Log.i(LOG_TAG, "key added is " + key + " value is " + snapshot.getValue());
+        final MapPoint point = snapshot.getValue(MapPoint.class);
         ShoutOut shoutOut;
         LatLng oldPos = null;
         synchronized (collectionLock) {
@@ -178,8 +201,8 @@ public class TheMapFragment extends SupportMapFragment
             query.whereEqualTo("objectId", shoutOut.getId());
             try {
                 final ParseUser user = query.getFirst();
-                Log.i(LOG_TAG, user.getUsername());
                 final String imageURL = user.getString("picURL");
+                shoutOut.setName(user.getUsername());
                 final Bitmap bitmap = BitmapFactory.decodeStream(new URL(imageURL).openStream());
                 shoutOut.setBitmap(bitmap);
             } catch (ParseException | IOException e) {
@@ -195,18 +218,16 @@ public class TheMapFragment extends SupportMapFragment
             mImageView.setImageBitmap(shoutOut.getBitmap());
             Bitmap icon = mIconGenerator.makeIcon();
             MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(icon))
-                    .position(shoutOut.getLocation());
+                    .position(shoutOut.getLocation())
+                    .title(shoutOut.getName())
+                    .snippet(shoutOut.getStatus());
             shoutOut.setMarker(getMap().addMarker(markerOptions));
         } else {
+            shoutOut.getMarker().setSnippet(shoutOut.getStatus());
             LatLngInterpolator latLngInterpolator = new LatLngInterpolator.Spherical();
             MarkerAnimation.animateMarker(shoutOut.getMarker(), oldPos, latLngInterpolator);
         }
 
-    }
-
-    @Override
-    public void onLoggedIn() {
-        mRef.child(LOC_PATH).addChildEventListener(locationChildListener);
     }
 
     ChildEventListener locationChildListener = new ChildEventListener() {
@@ -235,6 +256,12 @@ public class TheMapFragment extends SupportMapFragment
         }
     };
 
+    @OptionsItem(R.id.action_post_status)
+    void postStatus() {
+        new PostStatusFragment().show(getFragmentManager(), "STATUS");
+    }
+
+
     @Override
     public void onLocationChanged(Location location) {
         updateServerLocation(location);
@@ -251,6 +278,28 @@ public class TheMapFragment extends SupportMapFragment
             ParseGeoPoint parseGeoPoint = new ParseGeoPoint(location.getLatitude(), location.getLongitude());
             parseUser.put("geo", parseGeoPoint);
             parseUser.saveInBackground();
+        }
+    }
+
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        return false;
+    }
+
+    @Override
+    public void onCameraChange(CameraPosition cameraPosition) {
+        final LatLng target = cameraPosition.target;
+        double distance = Double.MAX_VALUE;
+        ShoutOut closest = null;
+        for (ShoutOut shoutOut : mShoutCollection.values()) {
+            final double v = SphericalUtil.computeDistanceBetween(target, shoutOut.getLocation());
+            if (v < distance) {
+                distance = v;
+                closest = shoutOut;
+            }
+        }
+        if (closest != null && closest.getMarker() != null) {
+            closest.getMarker().showInfoWindow();
         }
     }
 }

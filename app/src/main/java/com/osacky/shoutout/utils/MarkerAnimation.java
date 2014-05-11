@@ -87,6 +87,10 @@ public final class MarkerAnimation {
             }
         };
         Property<Marker, LatLng> property = Property.of(Marker.class, LatLng.class, "position");
+        assert marker != null;
+        assert property != null;
+        assert typeEvaluator != null;
+        assert finalPosition != null;
         ObjectAnimator animator = ObjectAnimator.ofObject(marker, property, typeEvaluator, finalPosition);
         animator.setDuration(3000);
         animator.start();

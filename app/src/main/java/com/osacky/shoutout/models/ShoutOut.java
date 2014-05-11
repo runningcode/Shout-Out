@@ -10,11 +10,12 @@ public class ShoutOut {
     private double lat;
     private double lon;
     private final String id;
+    private String name;
     private String status;
     private Bitmap bitmap;
     private Marker marker;
 
-    public ShoutOut(String id, Point p) {
+    public ShoutOut(String id, MapPoint p) {
         this.id = id;
         lat = p.getLat();
         lon = p.getLon();
@@ -24,9 +25,16 @@ public class ShoutOut {
         return new LatLng(lat, lon);
     }
 
-    public void setLocation(Point p) {
-        lat = p.getLat();
-        lon = p.getLon();
+    public void setLocation(MapPoint p) {
+        if (p.getLat() != 0) {
+            lat = p.getLat();
+        }
+        if (p.getLon() != 0) {
+            lon = p.getLon();
+        }
+        if (!TextUtils.isEmpty(p.getStatus())) {
+            status = p.getStatus();
+        }
     }
 
     public String getId() {
@@ -35,10 +43,6 @@ public class ShoutOut {
 
     public String getStatus() {
         return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     public Bitmap getBitmap() {
@@ -68,5 +72,13 @@ public class ShoutOut {
             throw new IllegalStateException("Id should not be 0");
         }
         return id.hashCode();
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
     }
 }

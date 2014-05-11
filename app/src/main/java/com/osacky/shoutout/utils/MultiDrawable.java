@@ -1,4 +1,4 @@
-package com.osacky.shoutout;
+package com.osacky.shoutout.utils;
 
 import android.graphics.Canvas;
 import android.graphics.ColorFilter;
@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 
 import java.util.List;
 
+@SuppressWarnings("unused")
 public class MultiDrawable extends Drawable {
 
     private final List<Drawable> mDrawables;

@@ -67,6 +67,7 @@ public class MainActivity extends ActionBarActivity
                                                     .getId() + "/picture?width=200&height=200"
                                     );
                                     parseUser.put("status", "Hello world!");
+                                    parseUser.put("username", graphUser.getName());
                                     parseUser.put("visible", true);
                                     parseUser.saveInBackground();
                                     mLoggedInCallback.onLoggedIn();
